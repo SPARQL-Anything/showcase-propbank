@@ -3,8 +3,8 @@ PREFIX fx: <http://sparql.xyz/facade-x/ns/>
 PREFIX xyz: <http://sparql.xyz/facade-x/data/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-prefix pbschema: <https://w3id.org/framester/pb/pbschema/> 
-PREFIX fschema: <https://w3id.org/framester/schema/> 
+prefix pbschema: <https://w3id.org/framester/pb/pbschema/>
+PREFIX fschema: <https://w3id.org/framester/schema/>
 CONSTRUCT {
   ?fPredicate a pbschema:Predicate ;
     rdfs:label ?lemma ;
@@ -16,14 +16,16 @@ CONSTRUCT {
   ?fRole a pbschema:Role ;
     rdfs:label ?roleDescription ;
     fschema:subsumedUnder ?argClass .
-} 
+
+}
 WHERE {
   SERVICE <x-sparql-anything:> {
     fx:properties fx:location "https://github.com/propbank/propbank-frames/archive/refs/tags/v3.1.zip" .
+    fx:properties fx:archive.matches "propbank-frames-3.1/frames/[^_]*.xml" .
     ?s1 ?p1 ?file1 .
     SERVICE <x-sparql-anything:> {
-      fx:properties fx:from-archive "https://github.com/propbank/propbank-frames/archive/refs/tags/v3.1.zip" .
       fx:properties fx:location ?file1 .
+      fx:properties fx:from-archive "https://github.com/propbank/propbank-frames/archive/refs/tags/v3.1.zip" .
       ?s a xyz:frameset .
       ?s ?li ?predicate .
       ?predicate a xyz:predicate .
@@ -52,7 +54,7 @@ WHERE {
           fx:properties fx:content ?f .
           fx:properties fx:txt.split " " .
           Filter(isLiteral(?frameId))
-          FILTER(strlen(str(?f))>0) 
+          FILTER(strlen(str(?f))>0)
           ?a ?b ?frameId
           BIND(IRI(CONCAT("https://w3id.org/framester/framenet/abox/frame/", ?frameId)) AS ?fFrame)
         }
