@@ -85,3 +85,58 @@ WHERE {
 }
 
 ```
+
+The outer ``SERVICE`` clause tells SPARQL Anything to download the PropBank release and iterate over the file names whose filepath matches the following pattern ``propbank-frames-3.1/frames/[^_]*.xml``.
+
+```
+  SERVICE <x-sparql-anything:> {
+    fx:properties fx:location "https://github.com/propbank/propbank-frames/archive/refs/tags/v3.1.zip" .
+    fx:properties fx:archive.matches "propbank-frames-3.1/frames/[^_]*.xml" .
+    ?s1 ?p1 ?file1 .
+  ....
+  }
+```
+
+
+The inner ``SERVICE`` matches the information to extract from a single
+
+```
+ SERVICE <x-sparql-anything:> {
+      fx:properties fx:location ?file1 .
+      fx:properties fx:from-archive "https://github.com/propbank/propbank-frames/archive/refs/tags/v3.1.zip" .
+      ?s a xyz:frameset .
+      ?s ?li ?predicate .
+      ?predicate a xyz:predicate .
+      ?predicate xyz:lemma ?lemma .
+      ?predicate ?li2 ?roleset .
+      ?roleset a xyz:roleset .
+      ?roleset xyz:name ?name .
+      ?roleset ?li3 ?aliases .
+      ?roleset xyz:id ?id .
+      ?roleset ?li5 ?roles .
+      ?roles a xyz:roles .
+      ?roles ?li6 ?role .
+      ?role a xyz:role .
+      ?role xyz:n ?num .
+      ?role xyz:descr ?roleDescription .
+      ?aliases a xyz:aliases .
+      ?aliases ?li4 ?alias .
+      ?alias a xyz:alias .
+      ?alias xyz:framenet ?f .
+      BIND(IRI(CONCAT("https://w3id.org/framester/pb/data/predicate/",str(?lemma))) AS ?fPredicate)
+      BIND(IRI(CONCAT("https://w3id.org/framester/pb/data/roleset/",str(?id))) AS ?fRoleset)
+      BIND(IRI(CONCAT("https://w3id.org/framester/pb/data/roleset/",str(?id),"__",str(?num))) AS ?fRole)
+      BIND(IRI(CONCAT("https://w3id.org/framester/pb/pbschema/ARG",str(?num))) AS ?argClass)
+      OPTIONAL{
+        SERVICE <x-sparql-anything:> {
+          fx:properties fx:content ?f .
+          fx:properties fx:txt.split " " .
+          Filter(isLiteral(?frameId))
+          FILTER(strlen(str(?f))>0)
+          ?a ?b ?frameId
+          BIND(IRI(CONCAT("https://w3id.org/framester/framenet/abox/frame/", ?frameId)) AS ?fFrame)
+        }
+      }
+    }
+ ```
+
