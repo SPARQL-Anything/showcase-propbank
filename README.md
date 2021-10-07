@@ -1,4 +1,4 @@
-# Building a knowledge graph of frames defined within the context of the the PropBank project
+# Building a knowledge graph of PropBank frames
 
 In what follows, `fx` refers to the following command
 ```
