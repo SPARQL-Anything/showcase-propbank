@@ -1,10 +1,3 @@
-# Building a knowledge graph of PropBank frames
-
-In what follows, `fx` refers to the following command
-```
-java -jar sparql-anything-0.3.2-SNAPSHOT.jar  
-```
-
 ## Input
 
 The input for the process is a [release of the Propbank dataset](https://github.com/propbank/propbank-frames/releases). 
@@ -140,3 +133,8 @@ The inner ``SERVICE`` matches the information to extract from a single
     }
  ```
 
+The query can be executed as follows 
+
+```
+java -jar sparql-anything-0.3.2-SNAPSHOT.jar  -q predicate2framester.sparql
+```
