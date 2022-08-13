@@ -1,3 +1,9 @@
+# Transforming Propbank into RDF
+
+This showcase provides examples of using SPARQL Anything to transform Propbank into RDF.
+
+In what follows, fx is a placeholder for java -jar sparql-anything-<version>.jar. See the SPARQL Anything usage documentation for details on Java options such as enabling logging.
+
 ## Input
 
 The input for the process is a [release of the Propbank dataset](https://github.com/propbank/propbank-frames/releases). 
@@ -5,6 +11,17 @@ The process supposes that the PropBank release is distributed as a single zip fi
 An example of such zip file can be found [here](https://github.com/propbank/propbank-frames/archive/refs/tags/v3.1.zip).
 
 ## Process
+
+|  | Extract artworks and subjects |
+|:----------|:-------------|
+| __Query__ | [predicate2framester.sparql](predicate2framester.sparql) |
+| __Input__ | https://github.com/propbank/propbank-frames/archive/refs/tags/v3.1.zip |
+| __Output__ | example in  [abbreaviate.ttl](abbreviate.ttl) |
+| __Type__ | CONSTRUCT |
+| __Options__ | archive.matches,  content, from-archive, location, txt.split|
+| __Formats__ | ZIP, XML |
+| __Level__ | Advanced 
+
 
 SPARQL anything allows you to extract the frames from all the XML files and specify them according you favourite ontology with a single query.
 In this showcase we specify frame data according to the [Framester ontology](https://w3id.org/framester).
@@ -136,7 +153,7 @@ The inner ``SERVICE`` matches the information to extract from a single
 The query can be executed as follows 
 
 ```
-java -jar sparql-anything-0.3.2-SNAPSHOT.jar  -q predicate2framester.sparql
+fx  -q predicate2framester.sparql
 ```
 
 **Note:**  it takes a while for processing all the files.
