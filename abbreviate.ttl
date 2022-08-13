@@ -1,0 +1,40 @@
+@prefix fschema: <https://w3id.org/framester/schema/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix pbschema: <https://w3id.org/framester/pb/pbschema/> .
+@prefix roleset: <https://w3id.org/framester/pb/data/roleset/> .
+@prefix predicate: <https://w3id.org/framester/pb/data/predicate/> .
+
+roleset:abbreviate.01__3
+  fschema:subsumedUnder pbschema:ARG3 ;
+  rdfs:label "start state of arg 1, original word when separate mention" ;
+  a pbschema:Role .
+
+roleset:abbreviate.01__1
+  fschema:subsumedUnder pbschema:ARG1 ;
+  rdfs:label "thing becoming shorter" ;
+  a pbschema:Role .
+
+roleset:abbreviate.01__4
+  fschema:subsumedUnder pbschema:ARG4 ;
+  rdfs:label "end state of arg1, new abbreviation" ;
+  a pbschema:Role .
+
+roleset:abbreviate.01__2
+  fschema:subsumedUnder pbschema:ARG2 ;
+  rdfs:label "EXT, arg1 is shortened by how much?" ;
+  a pbschema:Role .
+
+roleset:abbreviate.01
+  pbschema:hasRole roleset:abbreviate.01__2, roleset:abbreviate.01__3, roleset:abbreviate.01__0, roleset:abbreviate.01__4, roleset:abbreviate.01__1 ;
+  rdfs:label "make shorter, especially words" ;
+  a pbschema:RoleSet .
+
+predicate:abbreviate
+  pbschema:hasRoleSet roleset:abbreviate.01 ;
+  rdfs:label "abbreviate" ;
+  a pbschema:Predicate .
+
+roleset:abbreviate.01__0
+  fschema:subsumedUnder pbschema:ARG0 ;
+  rdfs:label "causal agent" ;
+  a pbschema:Role .
